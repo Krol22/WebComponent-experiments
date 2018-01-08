@@ -1,0 +1,59 @@
+<template id="button-component">
+    <style>
+        :host {
+            display: inline-block;
+            cursor: pointer;
+            border: 1px solid black;
+            padding: 10px;
+            user-select: none;
+            vertical-align: top;
+        }
+    </style>
+</template>
+<script>
+    class ButtonComponent extends HTMLElement {
+
+        static get observedAttributes() {
+            return ['on-click'];
+        }        
+
+        constructor() {
+            super();
+            this._onClick = function(){ };
+        }
+
+        connectedCallback() {
+            this._shadowRoot = this.attachShadow({ mode: 'open' });
+            // Transclude - add all elements before
+            this.childNodes.forEach((node) => {
+                this._shadowRoot.appendChild(node);
+            });
+
+            var template = this.currentDocument.querySelector('#button-component');
+            var instance = template.content.cloneNode(true);
+            this._shadowRoot.appendChild(instance); 
+
+        }
+
+        attributeChangedCallback(attributeName, oldValue, newValue) {
+            this.appendEventListener(newValue);
+        }
+
+        appendEventListener(value) {
+            this.removeEventListener('click', this._onClick);
+            this._onClick = value;
+            this.addEventListener('click', this._onClick);
+        }
+
+        disconnectedCallback() {
+            this.removeEventListener('click', this._onClick);
+        }
+
+        set onClick(newValue) {
+            this.appendEventListener(newValue);
+        }
+    }
+
+    ButtonComponent.prototype.currentDocument = document.currentScript.ownerDocument;
+    customElements.define('button-component', ButtonComponent);
+</script>

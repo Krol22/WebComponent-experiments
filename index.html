@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- <link rel="import" href="/JS/WebComponent.html"> -->
+    <title>Web components - todo list</title>
+</head>
+<body>
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Roboto');
+
+        * {
+            font-family: "Roboto";
+        }
+        
+        div {
+            display: inline-block;
+        }
+
+        body {
+            text-align: center;
+            padding-top: 50px;
+        }
+
+        main {
+            display: inline-block;
+            text-align: left;
+            width: 500px;
+        }
+
+    </style>
+    <connection-checker-component></connection-checker-component>
+    <main>
+        <h1>#Todo : </h1>
+        <add-todo-component></add-todo-component>
+        <list-component></list-component>
+    </main>
+
+    <script src="index.js" type="module"></script> 
+</body>
+</html>
