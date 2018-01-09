@@ -7,6 +7,50 @@ export class ListComponent extends HTMLElement {
         super();
         this.template = `
             <style>
+                #todo-list {
+                    position: relative;
+                }
+
+                @keyframes slide-down {
+                    0% { top: -55px; }
+                    100% { top: 0px; }
+                }
+ 
+                @keyframes slide-up {
+                    0% { top: 0px; }
+                    100% { top: -55px; }
+                }
+
+                @keyframes fade-in {
+                    0% { opacity: 0; }
+                    100% { opacity: 1; }
+                }
+
+                @keyframes fade-out {
+                    0% { opacity: 1; }
+                    100% { opacity: 0; }
+                }
+
+                .animate-list-added {
+                    animation-name: slide-down;
+                    animation-duration: 0.5s;
+                }
+
+                .animate-list-removed {
+                    animation-name: slide-up;
+                    animation-duration: 0.5s;
+                }
+                
+                .animate-new-element {
+                    animation-name: fade-in;
+                    animation-duration: 0.5s;
+                }
+
+                .animate-remove-element {
+                    animation-name: fade-out;
+                    animation-duration: 0.5s;
+                }
+
 
             </style>
             <div class="list" id="todo-list"></div>
@@ -27,13 +71,18 @@ export class ListComponent extends HTMLElement {
             this._todos = TodoService.getTodos();
             if(newItem) {
                 this.addItem(newItem);
-            } else {
-                this.render();
-            }
+            } 
         });
 
-
         this.addEventListener('removeListItem', this.removeItem); 
+
+        this.list.addEventListener('animationend', () => {
+            this.list.classList.remove('animate-list-added');
+            this.list.childNodes.forEach((child) => {
+                child.classList.remove('animate-list-removed');
+            });
+            this.render();
+        });
     }
 
     disconnectedCallback() {
@@ -43,43 +92,22 @@ export class ListComponent extends HTMLElement {
     addItem(newItem) {
         var newItemNode = document.createElement('item-component');
         this.list.insertBefore(newItemNode, this.list.firstChild);
-        this.list.childNodes.forEach((node) => {
-            node.style.transition = 'none';
-            node.style.top = '-55px';
-        });
-        newItemNode.style.opacity = '0';
+
         newItemNode.item = newItem;
 
-        setTimeout(() => {
-            this.list.childNodes.forEach((node) => {
-                node.style.transition = 'all 0.3s ease';
-            });
+        this.list.classList.add('animate-list-added');
+        newItemNode.classList.add('animate-new-element');
 
-            this.list.childNodes.forEach((node) => {
-                node.style.top = '0';
-            });
-            newItemNode.style.opacity = '1';
-        }, 0);
     }
 
     removeItem(event) {
         var itemToRemove = event.detail.hostelement;
         var itemId = itemToRemove.item.id;
 
-        var ended = false;
-
         this.animateItemUnderRemovedOne(event.detail.hostelement);
 
-        itemToRemove.style.top = '-55px';
-        itemToRemove.style.opacity = '0';
-        itemToRemove.addEventListener('transitionend', (e) => {
-            if(ended) {
-                return;
-            }
-
-            ended = true;
-            TodoService.removeTodo(itemId);
-        });
+        itemToRemove.classList.add('animate-remove-element');
+        TodoService.removeTodo(itemId);
     }
 
     animateItemUnderRemovedOne(itemToRemove) {
@@ -89,7 +117,7 @@ export class ListComponent extends HTMLElement {
         }
 
         for(var j = i; j < this.list.childNodes.length; j++) {
-            this.list.childNodes[j].style.top = '-55px';
+            this.list.childNodes[j].classList.add('animate-list-removed');
         }
     }
 

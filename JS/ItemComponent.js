@@ -17,10 +17,7 @@ export class ItemComponent extends HTMLElement {
                     margin: 10px 0;
                     opacity: 1;
 
-                    -webkit-transition: all 0.3s ease;
-                    -moz-transition: all 0.3s ease;
-                    -o-transition: all 0.3s ease;
-                    transition: all 0.3s ease;
+                    user-select: none;
                 }
 
                 .done-checkbox {
@@ -36,7 +33,6 @@ export class ItemComponent extends HTMLElement {
                     cursor: pointer;
                     flex: 1;
                 }
-
             </style>
 
             <input class='done-checkbox' type='checkbox'/>
