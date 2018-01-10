@@ -60,7 +60,7 @@ export class ConnectionCheckerComponent extends HTMLElement {
     }
 
     setCheckerInterval() {
-        this.onlineCheckerInterval = setInterval(this.checkIfIsOnline.bind(this), 1000);
+        this.onlineCheckerInterval = setInterval(this.checkIfIsOnline.bind(this), 30000);
     }
 
     checkIfIsOnline() {

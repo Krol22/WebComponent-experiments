@@ -33,6 +33,10 @@ export class ItemComponent extends HTMLElement {
                     cursor: pointer;
                     flex: 1;
                 }
+
+                .checked {
+                    border: 1px solid green;
+                }
             </style>
 
             <input class='done-checkbox' type='checkbox'/>
@@ -70,6 +74,7 @@ export class ItemComponent extends HTMLElement {
 
         this.checkbox.addEventListener('change', (e) => {
             // here i have problem with checked class... :/
+            this.classList.add('checked');
             this._item.checked = this.checkbox.checked;
             TodoService.updateTodo(this._item);
 

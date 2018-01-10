@@ -1,5 +1,5 @@
 import { TodoService } from './TodoService.js';
-import { EventAggregator } from './EventAggregator.js';
+import { EventAggregator } from '../shared/EventAggregator.js';
 
 export class ListComponent extends HTMLElement {
 
@@ -26,29 +26,35 @@ export class ListComponent extends HTMLElement {
                     100% { opacity: 1; }
                 }
 
-                @keyframes fade-out {
-                    0% { opacity: 1; }
-                    100% { opacity: 0; }
+                @keyframes remove {
+                    0% { 
+                        top: 0px;
+                        opacity: 1;
+                    }
+                    100% { 
+                        top: -55px;
+                        opacity: 0; 
+                    }
                 }
 
                 .animate-list-added {
                     animation-name: slide-down;
-                    animation-duration: 0.5s;
+                    animation-duration: 0.3s;
                 }
 
                 .animate-list-removed {
                     animation-name: slide-up;
-                    animation-duration: 0.5s;
+                    animation-duration: 0.3s;
                 }
                 
                 .animate-new-element {
                     animation-name: fade-in;
-                    animation-duration: 0.5s;
+                    animation-duration: 0.3s;
                 }
 
                 .animate-remove-element {
-                    animation-name: fade-out;
-                    animation-duration: 0.5s;
+                    animation-name: remove;
+                    animation-duration: 0.3s;
                 }
 
 
@@ -76,11 +82,12 @@ export class ListComponent extends HTMLElement {
 
         this.addEventListener('removeListItem', this.removeItem); 
 
-        this.list.addEventListener('animationend', () => {
+        this.list.addEventListener('animationend', (e) => {
             this.list.classList.remove('animate-list-added');
             this.list.childNodes.forEach((child) => {
                 child.classList.remove('animate-list-removed');
             });
+            this.list.removeChild(this.list.childNodes[0]);
             this.render();
         });
     }
@@ -106,18 +113,19 @@ export class ListComponent extends HTMLElement {
 
         this.animateItemUnderRemovedOne(event.detail.hostelement);
 
-        itemToRemove.classList.add('animate-remove-element');
         TodoService.removeTodo(itemId);
     }
 
     animateItemUnderRemovedOne(itemToRemove) {
-        var i = 0;
-        while((itemToRemove = itemToRemove.previousSibling) != null ) {
-            i++;
-        }
+        var index = Array
+            .from(this.list.childNodes)
+            .findIndex((elem) => {
+                return elem === itemToRemove;
+            });
 
-        for(var j = i; j < this.list.childNodes.length; j++) {
-            this.list.childNodes[j].classList.add('animate-list-removed');
+        itemToRemove.classList.add('animate-remove-element');
+        for(var i = index + 1; i < this.list.childNodes.length; i++) {
+            this.list.childNodes[i].classList.add('animate-list-removed');
         }
     }
 
