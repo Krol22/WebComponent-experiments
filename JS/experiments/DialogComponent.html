@@ -1,0 +1,48 @@
+<template id="dialog-component">
+    <style>
+        :host {
+            display: none;
+        }
+
+        :host.open {
+            display: block;
+        }
+
+        .dialog {
+            opacity: 1;
+            position: fixed;
+            left: 50%;
+            transform: translate(-50%, 50%);
+            width: 400px;
+            z-index: 10;
+            border: 3px solid black;
+            background-color: white;
+        }
+
+        .backdrop {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 9;
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+
+        ::slotted([slot='dialog-title']) {
+            font-size: 1.5em;
+        }
+
+        ::slotted([slot='dialog-content']) {
+            margin-top: 10px;
+        }
+
+    </style>
+    <div class="backdrop">
+        <div class="dialog">
+            <slot name="dialog-title" class="dialog-title"></slot>
+            <slot name="dialog-content" class="dialog-content"></slot>
+        </div>
+    </div>
+</template>
+<script src="./DialogComponent.js"></script>

@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="import" href="/JS/experiments/DialogComponent.html">
+    <link rel="import" href="/JS/experiments/ButtonComponent.html">
     <!-- <link rel="import" href="/JS/WebComponent.html"> -->
     <title>Web components - todo list</title>
 </head>
@@ -31,8 +33,18 @@
         }
 
     </style>
-    <connection-checker-component></connection-checker-component>
+    <!-- <connection-checker-component></connection-checker-component> -->
+
     <main>
+        <dialog-component id="dialog">
+            <div slot="dialog-title"> Test title </div>
+            <div slot="dialog-content"> 
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
+                    Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+            </div>
+        </dialog-component>
+
         <h1>#Todo : </h1>
         <add-todo-component></add-todo-component>
         <list-component></list-component>

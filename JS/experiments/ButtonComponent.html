@@ -24,7 +24,6 @@
 
         connectedCallback() {
             this._shadowRoot = this.attachShadow({ mode: 'open' });
-            // Transclude - add all elements before
             this.childNodes.forEach((node) => {
                 this._shadowRoot.appendChild(node);
             });

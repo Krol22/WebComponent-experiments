@@ -30,7 +30,6 @@ class WebComponent extends HTMLElement {
         if(!this._shadowRoot) {
             // return;
         }
-        this._data;
         this._shadowRoot.querySelectorAll('span')[0].innerHTML = this._data;
     }
 
