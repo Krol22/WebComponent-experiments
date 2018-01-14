@@ -1,4 +1,4 @@
-import { TodoService } from './TodoService.js';
+import { TodoService } from './shared/TodoService.js';
 
 export class ItemComponent extends HTMLElement {
 

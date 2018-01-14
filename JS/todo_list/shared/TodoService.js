@@ -1,4 +1,4 @@
-import { EventAggregator } from '../shared/EventAggregator.js';
+import { EventAggregator } from '../../shared/EventAggregator.js';
 
 export var TodoService = {
     id: 1129,

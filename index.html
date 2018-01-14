@@ -6,9 +6,6 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="import" href="/JS/experiments/DialogComponent.html">
     <link rel="import" href="/JS/experiments/ButtonComponent.html">
-    <link rel="import" href="/JS/todo_list/auth_module/SignUpComponent.html">
-    <link rel="import" href="/JS/todo_list/auth_module/SignInComponent.html">
-    <link rel="import" href="/JS/todo_list/auth_module/AuthComponent.html">
     <!-- <link rel="import" href="/JS/WebComponent.html"> -->
     <title>Web components - todo list</title>
 </head>
@@ -28,6 +25,54 @@
             text-align: left;
         }
 
+        main {
+            display: flex;
+            justify-content: center;
+        }
+
+        .todo-list {
+            max-width: 600px;
+            min-width: 400px;
+        }
+
+        .btn {
+            display: inline-block;
+
+            border: 1px solid black;
+            padding: 5px 10px;
+            margin: 2px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .btn:hover {
+            color: #dd00dd;
+            border-color: #dd00dd;
+        }
+
+        .form-input {
+            display: flex;
+            padding: 10px;
+            justify-content: space-between;
+        }
+
+        .form-input label{
+            flex: 2;
+        }
+
+        .form-input input{
+            flex: 5;
+        }
+
+        label {
+            padding: 5px;
+        }
+
+        input {
+            padding: 5px;
+        }
+
+
     </style>
     <!-- <connection-checker-component></connection-checker-component> -->
     <nav class="navigation">
@@ -35,11 +80,14 @@
     </nav>
 
     <main>
-        <h1>#Todo : </h1>
-        <add-todo-component></add-todo-component>
-        <list-component></list-component>
+        <div class="todo-list">
+            <h1>#Todo : </h1>
+            <add-todo-component></add-todo-component>
+            <list-component></list-component>
+        </div>
     </main>
 
     <script src="JS/index.js" type="module"></script> 
+    <script src="JS/todo_list/auth_module/AuthModule.js" type="module"></script> 
 </body>
 </html>

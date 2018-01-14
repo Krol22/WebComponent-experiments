@@ -1,4 +1,4 @@
-import { TodoService } from './TodoService.js';
+import { TodoService } from './shared/TodoService.js';
 import { EventAggregator } from '../shared/EventAggregator.js';
 
 export class ListComponent extends HTMLElement {
