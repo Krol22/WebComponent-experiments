@@ -1,22 +1,20 @@
 <template id="dialog-component">
     <style>
         :host {
-            display: none;
-        }
-
-        :host.open {
-            display: block;
         }
 
         .dialog {
-            opacity: 1;
+            width: var(--dialog-width, 400px);
+            opacity: 0;
             position: fixed;
             left: 50%;
             transform: translate(-50%, 50%);
-            width: 400px;
             z-index: 10;
             border: 3px solid black;
             background-color: white;
+
+            visibility: hidden;
+            transition: all 0.2s ease-in-out;
         }
 
         .backdrop {
@@ -26,8 +24,27 @@
             left: 0;
             right: 0;
             z-index: 9;
-            background-color: rgba(0, 0, 0, 0.7);
+            opacity: 0;
+            background-color: rgb(0, 0, 0);
+
+            visibility: hidden;
+            transition: all 0.2s ease-in-out;
         }
+
+        .backdrop.open {
+            opacity: 0.7;
+            visibility: visible;
+        }
+
+        .dialog.open {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        @keyframes backdrop-hide {
+            to { opacity: 0 }
+        }
+
 
         ::slotted([slot='dialog-title']) {
             font-size: 1.5em;
@@ -38,11 +55,9 @@
         }
 
     </style>
-    <div class="backdrop">
-        <div class="dialog">
-            <slot name="dialog-title" class="dialog-title"></slot>
-            <slot name="dialog-content" class="dialog-content"></slot>
-        </div>
+    <div id="backdrop" class="backdrop"></div>
+    <div id="dialog" class="dialog">
+        <slot name="dialog-content" class="dialog-content"></slot>
     </div>
 </template>
 <script src="./DialogComponent.js"></script>

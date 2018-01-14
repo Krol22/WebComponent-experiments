@@ -17,6 +17,9 @@ class DialogComponent extends HTMLElement {
         var instance = template.content.cloneNode(true);
 
         this.shadowRoot.appendChild(instance);
+
+        this.background = this.shadowRoot.querySelector('#backdrop');
+        this.dialog = this.shadowRoot.querySelector('#dialog');
     }
 
     disconnectedCallback() {
@@ -25,20 +28,20 @@ class DialogComponent extends HTMLElement {
     attributeChangedCallback(attributeName, oldValue, newValue) {
         if(attributeName === 'open') {
             if(newValue === 'true') {
-                this.style.display = 'block';
+                this.background.classList.add('open');
+                this.dialog.classList.add('open');
             } else {
-                this.style.display = 'none';
+                this.background.classList.remove('open');
+                this.dialog.classList.remove('open');
             }
         }
     }
 
     showModal() {
-        this.style.display = 'block';
         this.setAttribute('open', true);
     }
 
     close() {
-        this.style.display = 'none';
         this.removeAttribute('open', false);
     }
 
